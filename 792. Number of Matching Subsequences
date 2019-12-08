@@ -1,0 +1,31 @@
+class Solution {
+    public int numMatchingSubseq(String S, String[] words) {
+    List<Integer>[] list = new List[128];
+    for(char ch = 'a'; ch <= 'z'; ch++)
+        list[ch] = new ArrayList<>();
+    for(int i = 0; i < S.length(); i++) {
+        list[S.charAt(i)].add(i);
+    }
+    int ans = 0;
+    outer: for(String w : words) {
+        int idx = -1;
+        for(char ch : w.toCharArray()) {
+            idx = find(list[ch], idx);
+            if (idx == -1) continue outer;
+        }
+        ans++;
+    }
+    return ans;
+}
+private int find(List<Integer> li, int idx) {
+    int l = 0, r = li.size();
+    while(l < r) {
+        int mid = (l + r) / 2;
+        if (li.get(mid) > idx)
+            r = mid;
+        else
+            l = mid + 1;
+    }
+    return l == li.size() ? -1 : li.get(l);
+}
+}
