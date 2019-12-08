@@ -1,0 +1,58 @@
+class Solution {
+    public int openLock(String[] deadends, String target) {
+        if(target == "0000") return 0;
+        HashSet<String> deadSet = new HashSet<>();
+        for(String dead : deadends) {
+            if(dead.equals("0000")) return -1;
+            deadSet.add(dead);
+        }
+        HashSet<String> visited = new HashSet<>();
+        Queue<char[]> queue = new LinkedList<>();
+        queue.add(new char[] {'0','0','0','0'});
+        visited.add("0000");
+        int minLen = 0;
+        
+        while(!queue.isEmpty()) {
+            int size = queue.size();
+            while(size-- >0) {
+                char[] cur  = queue.poll();
+                List<String> nexts = convert(cur, deadSet, visited);
+                for(String next : nexts) {
+                    if(next.equals(target))
+                        return minLen+1;
+                    queue.offer(next.toCharArray());
+                    visited.add(next);
+                }
+            }
+            minLen++;
+        }
+        return -1;
+    }
+    
+    private List<String> convert(char[] cur, HashSet<String> deadSet, HashSet<String> visited) {
+        List<String> ret = new ArrayList<>();
+        for(int i=0; i<cur.length; i++) {
+            char tmp = cur[i];
+            if(tmp == '9') {
+                cur[i] = '0';
+            } else{
+                cur[i] = (char)(tmp+1);
+            }
+            String str = String.valueOf(cur);
+            if(!deadSet.contains(str) && !visited.contains(str)){
+                ret.add(new String(str));
+            }
+            if(tmp == '0') {
+                cur[i] = '9';
+            } else {
+                cur[i] = (char)(tmp-1);
+            }
+            str = String.valueOf(cur);
+            if(!deadSet.contains(str) && !visited.contains(str)) {
+                ret.add(new String(str));
+            }
+            cur[i] = tmp;
+        }
+        return ret;
+    }
+}
