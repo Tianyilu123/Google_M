@@ -1,0 +1,62 @@
+class Solution {
+    public void solve(char[][] board) {
+        if(board == null || board.length == 0 || board[0] == null || board[0].length == 0) return;
+        
+        int row = board.length, col = board[0].length;
+        Queue<Integer[]> myQueue = new LinkedList<>();
+        
+        for(int i=0; i<row; i++) {
+            if(board[i][0] == 'O') {
+                board[i][0] = 'Y';
+                Integer ij[] = {i,0};
+                myQueue.offer(ij);
+            }
+            if(board[i][col-1] =='O') {
+                board[i][col-1] = 'Y';
+                Integer ij[] = {i,col-1};
+                myQueue.offer(ij);
+            }
+        }
+        
+        for(int j=0; j<col; j++) {
+            if(board[0][j] == 'O') {
+                board[0][j] = 'Y';
+                Integer ij[] = {0,j};
+                myQueue.offer(ij);
+            }
+            if(board[row-1][j] == 'O') {
+                board[row-1][j] = 'Y';
+                Integer ij[] = {row-1, j};
+                myQueue.offer(ij);
+            }
+        }
+        
+        bfs(board, myQueue, row, col);
+        
+        for(int i=0; i<row; i++) {
+            for(int j=0; j<col; j++) {
+                if(board[i][j] == 'O')
+                    board[i][j] = 'X';
+                else if(board[i][j] == 'Y')
+                    board[i][j] = 'O';
+            }
+        }
+        
+    }
+    
+    private void bfs(char[][] board, Queue<Integer[]> queue, int row, int col) {
+        int[][] dirs = {{-1,0},{1,0},{0,-1},{0,1}};
+        while(!queue.isEmpty()) {
+            Integer[] cur = queue.poll();
+            int i = cur[0], j = cur[1];
+            for(int[] dir : dirs) {
+                int ii = i + dir[0], jj = j+dir[1];
+                if(ii>=0 && ii<row && jj>=0 && jj<col && board[ii][jj]=='O') {
+                    board[ii][jj] = 'Y';
+                    Integer ij[] = {ii, jj};
+                    queue.add(ij);
+                }
+            }
+        }
+    }
+}
