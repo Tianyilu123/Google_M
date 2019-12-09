@@ -1,0 +1,16 @@
+class Solution {
+    public boolean isValidBST(TreeNode root) {
+        Integer[] prev = new Integer[1];
+        return helper(root, prev);
+    }
+    
+    private boolean helper(TreeNode root, Integer[] prev) {
+        if(root == null) return true;
+        if(!helper(root.left, prev)) 
+            return false;
+        if(prev[0] != null && prev[0] >= root.val)
+            return false;
+        prev[0] = root.val;
+        return helper(root.right, prev);
+    }
+}
