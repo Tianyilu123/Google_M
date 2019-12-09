@@ -1,0 +1,17 @@
+class Solution {
+    public boolean checkSubarraySum(int[] nums, int k) {
+        if(nums == null || nums.length==0) return false;
+        int[] sum = new int[nums.length+1];
+        sum[0] = 0;
+        for(int i=1; i<sum.length; i++){
+            sum[i] = sum[i-1]+nums[i-1];
+        }
+        for(int j=2; j<sum.length; j++){
+            for(int i=j-2; i>=0; i--){
+                if(k==0 && (sum[j]-sum[i]) == 0) return true;
+                if(k != 0 && (sum[j]-sum[i])%k==0) return true;
+            }
+        }
+        return false;
+    }
+}
