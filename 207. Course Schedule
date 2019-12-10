@@ -1,0 +1,56 @@
+class Solution {
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        if(prerequisites == null)
+            throw new IllegalArgumentException("invalid input");
+        
+        V[] array = new V[numCourses];
+        
+        for(int i=0; i<numCourses; i++) {
+            array[i] = new V(i);
+        }
+        
+        int len = prerequisites.length;
+        
+        for(int i=0; i<len; i++) {
+            int prev = prerequisites[i][1];
+            int next = prerequisites[i][0];
+            array[prev].nexts.add(next);
+        }
+        
+        for(int i=0; i<numCourses; i++) {
+            if(isCycle(array[i], array)) return false;
+        }
+        return true;
+    }
+    
+    private enum Status {
+        initial, processing, done;
+    }
+    
+    private class V {
+        public int val;
+        public List<Integer> nexts;
+        public Status status;
+        
+        public V (int n) {
+            this.val = n;
+            this.nexts = new ArrayList<>();
+            this.status = Status.initial;
+        }
+    }
+    
+    private boolean isCycle(V cur, V[] array) {
+        if(cur.status == Status.done) return false;
+        if(cur.status == Status.processing) return true;
+        
+        cur.status = Status.processing;
+        
+        for(int i : cur.nexts) {
+            if(isCycle(array[i], array))
+                return true;
+        }
+        
+        cur.status = Status.done;
+        return false;
+    }
+}
