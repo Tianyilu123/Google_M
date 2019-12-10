@@ -22,3 +22,5 @@ class Solution {
         return len;
     }
 }
+
+// time : O(nlogn)
