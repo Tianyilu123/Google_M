@@ -48,3 +48,7 @@ class Vetex {
         this.val = i;
     }
 }
+
+
+// time: O(V+E)
+// space: O(V+E)
