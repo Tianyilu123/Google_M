@@ -47,3 +47,7 @@ public class Solution {
   }
 
 }
+
+
+// time : O(nlogn)
+// space: O(logn)
