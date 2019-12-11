@@ -1,3 +1,4 @@
+// method 1:
 class Solution {
     public int minSwap(int[] A, int[] B) {
         int swapRecord = 1, fixRecord = 0;
@@ -19,5 +20,33 @@ class Solution {
             }
         }
         return Math.min(swapRecord, fixRecord);
+    }
+}
+
+
+// method 2:
+class Solution {
+    public int minSwap(int[] A, int[] B) {
+        int res = Integer.MAX_VALUE;
+        dfs(A, B, 1, 0, res);
+        return res;
+    }
+    
+    private void(int[] A, int[] B, int i, int cur, int res) {
+        if(cur >= res) return;
+        if(i == A.size()) {
+            res = Math.min(res, cur);
+            return;
+        }
+        
+        if(A[i] > A[i-1] && B[i] > B[i-1]) {
+            dfs(A, B, i+1, c, res);
+        }
+        
+        if(A[i] > B[i-1] && B[i] > A[i-1]) {
+            swap(A[i], B[i]);
+            dfs(A,B,i+1, c+1, res);
+            swap(A[i], B[i]);
+        }
     }
 }
