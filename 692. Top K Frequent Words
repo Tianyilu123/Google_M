@@ -20,10 +20,13 @@ class Solution {
         for (int i = max; i >= 0 && res.size() < k; i--) {
             if (bucket[i] != null) {
                 Collections.sort(bucket[i]);
-                res.addAll(bucket[i]);
+                for(String str : bucket[i]) {
+                    res.add(str);
+                    if(res.size() == k) break;
+                }
             }
         }
-        return res.subList(0, k);
+        return res;
     }
 }
 
