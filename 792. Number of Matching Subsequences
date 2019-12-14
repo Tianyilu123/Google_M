@@ -13,31 +13,33 @@ class Solution {
         return res;
     }
     
-    private int search(List<Integer> ns, int n) {
-        if(ns == null) return -1;
-        int lo=0, hi=ns.size()-1;
-        if(ns.get(lo) >= n)
-            return ns.get(lo);
-        if(ns.get(hi) < n)
+    private int search(List<Integer> pos, int cur) {
+        if(pos == null) return -1;
+        int lo=0, hi=pos.size()-1;
+        if(pos.get(lo) >= cur)
+            return pos.get(lo);
+        if(pos.get(hi) < cur)
             return -1;
-        while(lo < hi) {
+        while(lo <= hi) {
             int mid = (lo+hi)/2;
-            if(ns.get(mid) == n)
-                return ns.get(mid);
-            if(ns.get(mid) < n)
+            if(pos.get(mid) == cur)
+                return pos.get(mid);
+            else if(pos.get(mid) < cur)
                 lo = mid+1;
             else
-                hi = mid;
+                hi = mid-1;
         }
-        return ns.get(hi);
+        
+        return pos.get(lo);
     }
     
-    private List<Integer>[] positions(String s) {
+    private List<Integer>[] positions(String S) {
         List<Integer>[] pos = new List[26];
-        for(int i=0; i<s.length(); i++) {
-            char c = s.charAt(i);
-            if(pos[c-'a'] == null)
+        for(int i=0; i<S.length(); i++) {
+            char c = S.charAt(i);
+            if(pos[c-'a'] == null) {
                 pos[c-'a'] = new ArrayList<>();
+            }
             pos[c-'a'].add(i);
         }
         return pos;
