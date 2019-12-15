@@ -1,22 +1,31 @@
 class Solution {
     public int shipWithinDays(int[] weights, int D) {
-        int left = 0, right = 0;
-        for (int w: weights) {
-            left = Math.max(left, w);
-            right += w;
+        int start = 0, end = 0;
+        for(int w : weights){
+            start = Math.max(start, w);
+            end = end + w;
         }
-        while (left < right) {
-            int mid = (left + right) / 2, need = 1, cur = 0;
-            for (int w: weights) {
-                if (cur + w > mid) {
-                    need += 1;
-                    cur = 0;
-                }
-                cur += w;
+        while(start <= end){
+            int mid = (end - start)/2 + start;
+            if(isValid(weights, D, mid)){
+                end = mid - 1;
             }
-            if (need > D) left = mid + 1;
-            else right = mid;
+            else 
+                start = mid + 1;
         }
-        return left;
+        return start;
+    }
+    
+    private boolean isValid(int[] weights, int d, int target){
+        int sum = 0, count = 1;
+        for(int w : weights){
+            sum = sum + w;
+            if(sum > target){
+                sum = w;
+                count++;
+                if(count > d) return false;
+            }
+        }
+        return true;
     }
 }
