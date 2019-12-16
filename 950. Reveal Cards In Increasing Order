@@ -20,3 +20,8 @@ class Solution {
     }
 }
 
+
+
+Time Complexity: O(Nlog⁡N), where N is the length of deck.
+
+Space Complexity: O(N)
