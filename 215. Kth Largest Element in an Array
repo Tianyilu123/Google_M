@@ -8,7 +8,7 @@ public int findKthLargest(int[] nums, int k) {
 O(N lg N) running time + O(1) memory
 
 
-// method2 (selection sort)
+// method2 (priorityQueue)
 public int findKthLargest(int[] nums, int k) {
 
     final PriorityQueue<Integer> pq = new PriorityQueue<>();
@@ -73,7 +73,7 @@ public int findKthLargest(int[] nums, int k) {
  O(N) best case / O(N^2) worst case running time + O(1) memory
  
  
- // method4:
+ // method4(randomnize)
  public int findKthLargest(int[] nums, int k) {
 
         shuffle(nums);
