@@ -41,7 +41,8 @@ class Solution {
                 int prev = A[i] * 2 - A[j];
                 if(prev < 0 || index[prev] == -1)
                     continue;
-                dp[i][j] = dp[index[prev]][i] + 1;
+                int idx = index[prev];
+                dp[i][j] = dp[idx][i] + 1;
                 res = Math.max(res, dp[i][j]);
             }
             
