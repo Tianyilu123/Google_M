@@ -1,0 +1,31 @@
+class Solution {
+    public List<String> generateAbbreviations(String word) {
+        List<String> res = new ArrayList<>();
+        if(word == null) return res;
+        helper(word, res, new StringBuilder(), 0, 0);
+        return res;
+    }
+    
+    private void helper(String word, List<String> res, StringBuilder path, int count, int idx) {
+        if(idx == word.length()) {
+            if(count > 0) {
+                int len = path.length();
+                path.append(count);
+                res.add(path.toString());
+                path.setLength(len);
+            } else {
+                res.add(path.toString());
+            }
+            return;
+        }
+        
+        helper(word, res, path, count+1, idx+1);
+        int lenP = path.length();
+        if(count > 0)
+            path.append(count);
+        path.append(word.charAt(idx));
+        helper(word, res, path, 0, idx+1);
+        
+        path.setLength(lenP);
+    }
+}
