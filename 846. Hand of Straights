@@ -38,4 +38,9 @@ class Solution {
         }
         return true;   
     }
+    
+    
+  // Time Complexity: O(mwlogm). TreeMap, get, put, remove all takes O(logm). m = hand.length.
+
+// Space: O(m).
 }
