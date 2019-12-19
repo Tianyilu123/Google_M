@@ -20,3 +20,6 @@ class Solution {
         return dp[sum];
     }
 }
+
+Time complexity: O(n*sum)
+Space complexity: O(sum)
