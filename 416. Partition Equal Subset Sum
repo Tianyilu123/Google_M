@@ -1,6 +1,7 @@
 class Solution {
     public boolean canPartition(int[] nums) {
-        if(nums == null || nums.length == 0) return true;
+        if(nums == null || nums.length == 0) return false;
+        // if(nums == null || nums.length == 0) return true;
         int sum = 0;
         for(int num : nums) {
             sum += num;
