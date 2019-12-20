@@ -9,15 +9,17 @@ class SnapshotArray {
         }
     }
 
-    public void set(int index, int val) {
+    public void set(int index, int val) {  // O(log(n))
         A[index].put(snap_id, val);
     }
 
-    public int snap() {
-        return snap_id++;
+    public int snap() {  // O(1)
+        int prev = snap_id;
+        snap_id++;
+        return prev;
     }
 
-    public int get(int index, int snap_id) {
+    public int get(int index, int snap_id) { // O(log(n))
         return A[index].floorEntry(snap_id).getValue();
     }
 }
