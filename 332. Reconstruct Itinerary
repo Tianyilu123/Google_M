@@ -22,3 +22,7 @@ class Solution {
         path.addFirst(departure);
     }
 }
+
+
+// time: O(nlogn)
+// space: O(n)
