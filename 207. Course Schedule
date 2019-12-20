@@ -1,3 +1,52 @@
+// method 1:
+class Solution {
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        if(prerequisites == null)
+            throw new IllegalArgumentException("invalid input");
+        
+        HashMap<Integer, ArrayList<Integer>> graph = new HashMap<>();
+        
+        int len = prerequisites.length;
+        
+        for(int i=0; i<len;i++) {
+            int prev = prerequisites[i][1];
+            int next = prerequisites[i][0];
+            if(!graph.containsKey(prev))
+                graph.put(prev, new ArrayList<>());
+            graph.get(prev).add(next);
+        }
+        
+        int[] status = new int[numCourses];
+        for(int i=0; i<numCourses; i++) {
+            if(isCycle(i, graph, status))
+                return false;
+        }
+        return true;
+    }
+    
+    private boolean isCycle(int course, HashMap<Integer, ArrayList<Integer>> map,
+                                int[] status) {
+        if(status[course] == 1) return true;
+        if(status[course] == -1) return false;
+        
+        status[course] = 1;
+        
+        if(map.containsKey(course)) {
+            for(int next : map.get(course)) {
+                if(isCycle(next, map, status))
+                    return true;
+            }
+        }
+        status[course] = -1;
+        return false;
+    }
+}
+
+Time complexity: O(n^2)
+Space complexity: O(n)
+
+
+// method 2:
 class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         if(prerequisites == null)
