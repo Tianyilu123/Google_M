@@ -46,7 +46,7 @@ class SnakeGame {
         // eat someting;
         if(foodIdx < food.length && rowHead == food[foodIdx][0] && colHead == food[foodIdx][1]) {
             foodIdx++;
-            ++score;
+            score++;
             set.add(deque.peekLast());
             return score;
         }
