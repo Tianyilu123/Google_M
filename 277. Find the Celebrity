@@ -20,6 +20,10 @@ public class Solution extends Relation {
     }
 }
 
+// time : O(n)
+// space: O(1)
+
+
 // method 2:
 public class Solution extends Relation {
     public int findCelebrity(int n) {
