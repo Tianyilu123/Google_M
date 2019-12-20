@@ -15,3 +15,6 @@ class Solution {
         return dp[amount];
     }
 }
+
+// time: O(n*amount)
+// space: O(amount)
