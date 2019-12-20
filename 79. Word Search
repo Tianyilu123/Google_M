@@ -33,3 +33,8 @@ class Solution {
         return res;
     }
 }
+
+
+// time:  search -> O(4^l), l = length of word;
+          total -> O(m*n*4^l)
+// space: O(m*n + 1)
