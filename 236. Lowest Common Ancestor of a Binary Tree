@@ -9,3 +9,6 @@ class Solution {
         return left == null ? right : left;
     }
 }
+
+Time complexity: O(n)
+Space complexity: O(h)
