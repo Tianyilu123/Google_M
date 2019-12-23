@@ -1,0 +1,40 @@
+class Solution {
+    public String removeDuplicates(String s, int k) {
+        int len = s.length();
+        if(len < k) return s;
+        Deque<Node> stack = new ArrayDeque<>();
+        
+        for(char c : s.toCharArray()) {
+            if(stack.isEmpty() || c != stack.peek().ch) {
+                stack.push(new Node(c));
+            } else {
+                int times = stack.peek().times;
+                if(times + 1 == k) {
+                    stack.pop();
+                } else {
+                    stack.peek().times++;
+                }
+            }
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        while (!stack.isEmpty()) {
+            Node node = stack.pop();
+            int times = node.times;
+            for(int i=0; i<times; i++) {
+                sb.append(node.ch);
+            }
+        }
+        
+        return sb.reverse().toString();
+    }
+}
+
+class Node {
+    char ch;
+    int times;
+    public Node(char c) {
+        ch = c;
+        times = 1;
+    }
+}
