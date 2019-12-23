@@ -14,3 +14,24 @@ class Solution {
         return helper(root.right, prev);
     }
 }
+
+
+// method 2:
+class Solution {
+    TreeNode prev = null;
+    public boolean isValidBST(TreeNode root) {
+        if(root == null) return true;
+        return helper(root);
+    }
+    
+    private boolean helper(TreeNode root) {
+        if(root == null) return true;
+        boolean left = helper(root.left);
+        if(prev != null) {
+            if(root.val <= prev.val) return false;
+        }
+        prev = root;
+        boolean right = helper(root.right);
+        return left && right;
+    }
+}
