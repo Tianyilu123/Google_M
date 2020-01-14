@@ -3,6 +3,7 @@ class Solution {
         ListNode dummy = new ListNode(0);
         ListNode cur = dummy;
         int sum = 0;
+        
         while(l1 != null || l2 != null) {
             if(l1 != null) {
                 sum += l1.val;
@@ -16,6 +17,8 @@ class Solution {
             sum /= 10;
             cur = cur.next;
         }
+        
+        
         if(sum == 1) cur.next = new ListNode(1);
         return dummy.next;
     }
