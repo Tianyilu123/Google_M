@@ -1,6 +1,9 @@
 // method 1:
 class Solution {
     public boolean isNStraightHand(int[] hand, int W) {
+        if (W == 1) return true;
+        if (hand.length % W != 0) return false;
+
         PriorityQueue<Integer> minHeap = new PriorityQueue<>();
         for(int i : hand){
             minHeap.add(i);
@@ -19,6 +22,8 @@ class Solution {
         return true;
     }
 }
+
+
 
 // method 2:
 class Solution {
