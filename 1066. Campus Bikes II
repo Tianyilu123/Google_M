@@ -12,15 +12,20 @@ class Solution {
         
         for(int i=0; i<bikes.length; i++) {
             if((stateb & (1<<i)) == 0) {
-                min = Math.min(min, Math.abs(workers[workerIdx][0] - bikes[i][0]) +
-                              Math.abs(workers[workerIdx][1] - bikes[i][1]) + 
+                min = Math.min(min, dist(workers, bikes, workerIdx, i) + 
                               dfs(workers, bikes, workerIdx+1, stateb | (1<<i), dp));
             }
         }
         dp[stateb] = min;
         return min;
     }
+    
+    private int dist(int[][] workers, int[][] bikes, int workerIdx, int bikeIdx) {
+        return Math.abs(workers[workerIdx][1] - bikes[bikeIdx][1]) + 
+            Math.abs(workers[workerIdx][0] - bikes[bikeIdx][0]);
+    }
 }
+
 
 
 
