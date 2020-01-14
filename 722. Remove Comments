@@ -22,11 +22,17 @@ class Solution {
                     else    sb.append(s.charAt(i));     //not a comment
                 }
             }
+            
+            
             if (!mode && sb.length() > 0) {
                 res.add(sb.toString());
                 sb = new StringBuilder();   //reset for next line of source code
             }
+            
+            
         }
+        
+        
         return res;
     }
 }
