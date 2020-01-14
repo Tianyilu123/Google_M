@@ -1,37 +1,80 @@
-public class Solution {
+class Solution {
     public boolean hasPath(int[][] maze, int[] start, int[] destination) {
-        int m = maze.length, n = maze[0].length;
-        boolean[][] visited = new boolean[m][n];
-        int[] dx = new int[]{0, -1, 0, 1};
-        int[] dy = new int[]{1, 0, -1, 0};
-        
-        Queue<int[]> queue = new LinkedList<>();
-        queue.offer(start);
+	//edge case
+        if(maze == null || maze.length == 0){
+            return false;
+        }
+		
+		//avoid loop
+        boolean[][] visited = new boolean[maze.length][maze[0].length];
         visited[start[0]][start[1]] = true;
-        
-        while (!queue.isEmpty()) {
-            int[] curPos = queue.poll();
-            if (curPos[0] == destination[0] && curPos[1] == destination[1]) {
+		
+		//start to dfs
+        if(dfs(start[0], start[1], destination[0], destination[1], maze, visited)){
+            return true;
+        }
+		//if can't arrave destination
+        return false;
+    }
+    private boolean dfs(int start1, int start2, int end1, int end2, int[][] maze, boolean[][] visited) {
+	//corner case,
+        if(start1 == end1 && start2 == end2){
+            return true;
+        }
+		
+		//firstly, we can go straight down until hit '1' or the bondary.
+        int news1 = start1;
+        while (news1 + 1 < maze.length && maze[news1 + 1][start2] == 0) {
+            news1++;
+        } 
+		//if that place we've never visited, we will go there and run dfs again.
+        if(!visited[news1][start2]){
+            visited[news1][start2] = true;
+            if(dfs(news1, start2, end1, end2, maze, visited)){
                 return true;
             }
-            // try four direction until it hits the wall
-            for (int direction = 0; direction < 4; direction++) {
-                int nx = curPos[0], ny = curPos[1];
-                while (nx >= 0 && nx < m && ny >= 0 && ny < n && maze[nx][ny] == 0) {
-                    nx += dx[direction];
-                    ny += dy[direction];
-                }
-                
-                //back one step
-                nx -= dx[direction];
-                ny -= dy[direction];
-                
-                if (!visited[nx][ny]) {
-                    visited[nx][ny] = true;
-                    queue.offer(new int[]{nx, ny});
-                }
+        }
+		
+		//secondly, we can go straight right until hit '1' or the bondary.
+           int news2 = start2;
+        while (news2 + 1 < maze[0].length && maze[start1][news2 + 1] == 0) {
+            news2++;
+        } 
+		//if that place we've never visited, we will go there and run dfs again.
+        if(!visited[start1][news2]){
+            visited[start1][news2] = true;
+            if(dfs(start1, news2, end1, end2, maze, visited)){
+                return true;
             }
         }
+		
+		//Thirdly, we can go straight up until hit '1' or the bondary.
+           int news3 = start1;
+        while (news3 - 1 >= 0 && maze[news3 - 1][start2] == 0) {
+            news3--;
+        } 
+		//if that place we've never visited, we will go there and run dfs again.
+        if(!visited[news3][start2]){
+            visited[news3][start2] = true;
+            if(dfs(news3, start2, end1, end2, maze, visited)){
+                return true;
+            }
+        }
+		
+		//Finally,  the same as before, we can go straight left until hit '1' or the bondary.  just copy 4 times.
+           int news4 = start2;
+        while (news4-1 >= 0 && maze[start1][news4-1] == 0) {
+            news4--;
+        } 
+		//if that place we've never visited, we will go there and run dfs again
+        if(!visited[start1][news4]){
+            visited[start1][news4] = true;
+            if(dfs(start1, news4, end1, end2, maze, visited)){
+                return true;
+            }
+        }
+		
+		//if dont get true result, we will return false.
         return false;
     }
 }
