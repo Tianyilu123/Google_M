@@ -18,14 +18,14 @@ Solution II -- pay the fee when selling the stock:
 
 class Solution {
     public int maxProfit(int[] prices, int fee) {
-        long T_ik0 = 0, T_ik1 = Integer.MIN_VALUE;
-    
-        for (int price : prices) {
-            long T_ik0_old = T_ik0;
-            T_ik0 = Math.max(T_ik0, T_ik1 + price - fee);
-            T_ik1 = Math.max(T_ik1, T_ik0_old - price);
+        long sell = 0, buy = Integer.MIN_VALUE;
+        
+        for(int price : prices) {
+            long sell_old = sell;
+            sell = Math.max(sell, buy + price - fee);
+            buy = Math.max(buy, sell_old - price);
         }
         
-        return (int)T_ik0;
+        return (int)sell;
     }
 }
