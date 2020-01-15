@@ -1,94 +1,31 @@
-// method1:
 class BoundedBlockingQueue {
-
-  private final int capacity;
-  private final Queue<Integer> q = new ArrayDeque<>();
-
-  public BoundedBlockingQueue(final int capacity) {
-    this.capacity = capacity;
-  }
-
-  public void enqueue(int element) throws InterruptedException {
-    synchronized (q) {
-      while (q.size() == this.capacity) {
-        q.wait();
-      }
-      q.add(element);
-      q.notifyAll();
-    }
-  }
-
-  public int dequeue() throws InterruptedException {
-    synchronized (q) {
-      while (q.isEmpty()) {
-        q.wait();
-      }
-      final int res = q.remove();
-      q.notifyAll();
-      return res;
-    }
-  }
-
-  public int size() {
-    synchronized (q) {
-      return q.size();
-    }
-  }
-}
-
-// method 2:
-import java.util.concurrent.locks.ReentrantLock; 
-import java.util.concurrent.locks.Condition; 
-
-class BoundedBlockingQueue {
-    private ReentrantLock lock = new ReentrantLock();
-    private Condition full = lock.newCondition();
-    private Condition empty = lock.newCondition();
-    private int[] queue;
-    private int tail = 0;
-    private int head = 0;
-    private int size = 0;
+    
+    private Queue<Integer> queue = new LinkedList<>();
+    private int limit = 0;
+    
     public BoundedBlockingQueue(int capacity) {
-        queue = new int[capacity];
+        this.limit = capacity;
     }
     
-    public void enqueue(int element) throws InterruptedException {
-		lock.lock();
-        try {
-            while(size == queue.length) {
-                full.await();
-            }
-            queue[tail++] = element;
-            tail %= queue.length;
-            size++;
-            empty.signal();
-        } finally {
-            lock.unlock();
+    public synchronized void enqueue(int element) throws InterruptedException {
+        while(queue.size() == limit) {
+            wait();
         }
+        queue.offer(element);
+        notifyAll();
     }
     
-    public int dequeue() throws InterruptedException {
-		lock.lock();
-        try {
-            while(size == 0) {
-                empty.await();
-            }
-            int res = queue[head++];
-            head %= queue.length;
-            size--;
-            full.signal();
-            return res;
-        } finally {
-            lock.unlock();
+    public synchronized int dequeue() throws InterruptedException {
+        while(queue.size() == 0) {
+            wait();
         }
+        
+        int val = queue.poll();
+        notifyAll();
+        return val;
     }
     
-    public int size() throws InterruptedException {
-        lock.lock();
-		try {
-			return this.size;
-		} finally {
-			lock.unlock();
-		}
+    public int size() {
+        return queue.size();
     }
 }
