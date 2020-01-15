@@ -24,6 +24,8 @@ class Solution {
                     }
                 }
             }
+            // traverse whole matrix is over;
+            
             if(found) {
                 for(int j=0; j<cols; j++) {
                     int storeInd = rows-1;
@@ -36,7 +38,11 @@ class Solution {
                         board[k][j] = 0;
                 }
             }
+            // cancel candy process is over
+            
         }
+        
+        
         return board;
     }
 }
