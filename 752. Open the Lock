@@ -14,17 +14,18 @@ class Solution {
         
         while(!queue.isEmpty()) {
             int size = queue.size();
+            minLen++;
             while(size-- >0) {
                 char[] cur  = queue.poll();
                 List<String> nexts = convert(cur, deadSet, visited);
                 for(String next : nexts) {
                     if(next.equals(target))
-                        return minLen+1;
+                        return minLen;
                     queue.offer(next.toCharArray());
                     visited.add(next);
                 }
             }
-            minLen++;
+            // minLen++;
         }
         return -1;
     }
