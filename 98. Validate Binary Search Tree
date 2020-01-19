@@ -35,3 +35,24 @@ class Solution {
         return left && right;
     }
 }
+
+
+// method 3:
+class Solution {
+    Integer prev = null;
+    public boolean isValidBST(TreeNode root) {
+        if(root == null) return true;
+        
+        if(!isValidBST(root.left))
+            return false;
+        
+        if(prev != null) {
+            if(prev >= root.val)
+                return false;
+        }
+        prev = root.val;
+        
+        return isValidBST(root.right);
+    }
+}
+
