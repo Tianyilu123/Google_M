@@ -11,7 +11,7 @@ class Solution {
         int min = Integer.MAX_VALUE;
         
         for(int i=0; i<bikes.length; i++) {
-            if((stateb & (1<<i)) == 0) {
+            if((stateb & (1<<i)) == 0) {   // num | (1<<k): set num's k-th bit as 1 ; num & (1<<k): get num's k-th bit
                 min = Math.min(min, dist(workers, bikes, workerIdx, i) + 
                               dfs(workers, bikes, workerIdx+1, stateb | (1<<i), dp));
             }
