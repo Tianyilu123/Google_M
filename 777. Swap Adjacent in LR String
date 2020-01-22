@@ -47,7 +47,7 @@ class Solution {
                 return false;
             }
             // if the character is 'L', it can only be moved to the left. p1 should be greater or equal to p2.
-            if(start.charAt(p1) == 'L' && p2 > p1){
+            if(start.charAt(p1) == 'L' && p1 < p2){
                 return false;
             }
             // if the character is 'R', it can only be moved to the right. p2 should be greater or equal to p1.
