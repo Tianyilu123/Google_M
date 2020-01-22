@@ -14,14 +14,16 @@ class Solution {
                 }
             }
             
-            generate (ans, count, (center != null ? String.valueOf(center) : new String ()), s.length());
+            generate (ans, count, 
+                      (center != null ? String.valueOf(center) : new String ()), s.length());
         }
         
         return ans; 
     }
     
     private void generate (List<String> ans, int[] count, String build, int len) {
-        if (build.length() == len) ans.add (new String (build));
+        if (build.length() == len) 
+            ans.add (new String (build));
         
         for (int idx = 0; idx < count.length; idx ++) {
             if (count [idx] > 0) {
